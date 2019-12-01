@@ -73,6 +73,10 @@ public class TrieTree {
 
     // SearchByPrefix
     public void autocomplete(String prefix) {
+        autocomplete(prefix, -1);
+    }
+
+    public void autocomplete(String prefix, int n) {
         if(prefix == null) {
             return;
         }
@@ -86,26 +90,34 @@ public class TrieTree {
             System.out.println(prefix);
         }
 
-        preOrderCompletions(prefix, occurrence.getChildren().getRoot());
+        preOrderCompletions(prefix, occurrence.getChildren().getRoot(), n);
     }
 
-    private void preOrderCompletions(String prefix, AVLNode<TrieNode> node) {
+    private void preOrderCompletions(String prefix, AVLNode<TrieNode> node, int n) {
         String next = prefix + node.getValue().getValue();
 
         if(node.getValue().getIsWord()) {
             System.out.println(next);
         }
 
+        if(n == 0) {
+            return;
+        }
+
+        if(n > 0) {
+            --n;
+        }
+
         if(node.getValue().getChildren().getRoot() != null) {
-            preOrderCompletions(next, node.getValue().getChildren().getRoot());
+            preOrderCompletions(next, node.getValue().getChildren().getRoot(), n);
         }
 
         if (node.getLeft() != null) {
-            preOrderCompletions(prefix, node.getLeft());
+            preOrderCompletions(prefix, node.getLeft(), n);
         }
 
         if (node.getRight() != null) {
-            preOrderCompletions(prefix, node.getRight());
+            preOrderCompletions(prefix, node.getRight(), n);
         }
     }
 

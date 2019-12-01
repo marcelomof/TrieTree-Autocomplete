@@ -71,7 +71,25 @@ public class TrieTreeTest {
         tree.insert("ja");
         tree.insert("poo");
 
-        tree.autocomplete("ja");
+        tree.autocomplete("j");
+        assertEquals("ja\njava\njogo\n", outContent.toString());
+    }
+
+    @Test
+    public void AutocompletarN() {
+        final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        final PrintStream originalOut = System.out;
+
+        System.setOut(new PrintStream(outContent));
+
+        TrieTree tree = new TrieTree();
+
+        tree.insert("java");
+        tree.insert("jogo");
+        tree.insert("ja");
+        tree.insert("poo");
+
+        tree.autocomplete("j", 2);
         assertEquals("ja\njava\n", outContent.toString());
     }
 }
