@@ -2,7 +2,7 @@ package br.ufrn.imd.marcelo;
 
 public class AVLTree<ValueType extends Indexable> {
 
-    private AVLNode<ValueType> root;
+    private AVLNode<ValueType> root = null;
 
     public AVLNode<ValueType> getRoot() {
         return root;
