@@ -17,7 +17,7 @@ public class TrieTree {
 
     // Insert
     private void insert(String word, TrieNode node) {
-        if(word == null || node == null) {
+        if(word == null) {
             return;
         }
 
@@ -43,6 +43,34 @@ public class TrieTree {
     }
 
     // Search
+    public TrieNode find(String word) {
+        return find(word, root);
+    }
+
+    private TrieNode find(String word, TrieNode node) {
+        if(word == null) {
+            return null;
+        }
+
+        TrieNode next;
+        if(node.getChildren().getRoot() == null) {
+            return null;
+        }
+        else if(node.getChildren().search(word.charAt(0)) == null) {
+            return null;
+        }
+        else {
+            next = node.getChildren().search(word.charAt(0)).getValue();
+        }
+
+        if(word.length() > 1) {
+            return find(word.substring(1), next);
+        }
+        else {
+            return next;
+        }
+    }
+
     // SearchByPrefix
     // Remove
 }

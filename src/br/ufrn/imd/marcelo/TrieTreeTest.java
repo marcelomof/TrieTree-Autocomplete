@@ -43,4 +43,14 @@ public class TrieTreeTest {
         Assert.assertTrue(nodeA1.getIsWord());
         Assert.assertTrue(nodeA2.getIsWord());
     }
+
+    @Test
+    public void PalavraEhEncontrada() {
+        TrieTree tree = new TrieTree();
+
+        tree.insert("java");
+
+        Assert.assertNotNull(tree.find("java"));
+        Assert.assertNull(tree.find("javo"));
+    }
 }
