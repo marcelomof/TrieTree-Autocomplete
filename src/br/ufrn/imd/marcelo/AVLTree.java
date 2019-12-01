@@ -4,6 +4,10 @@ public class AVLTree<ValueType extends Indexable> {
 
     private AVLNode<ValueType> root;
 
+    public AVLNode<ValueType> getRoot() {
+        return root;
+    }
+
     public void insert(ValueType value) {
         root = insert(new AVLNode<ValueType>(value), root);
     }
