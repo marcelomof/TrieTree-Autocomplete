@@ -87,7 +87,7 @@ public class AVLTree<ValueType extends Indexable> {
         return search(key, root);
     }
 
-    private AVLNode<ValueType> search(int key, AVLNode node) {
+    private AVLNode<ValueType> search(int key, AVLNode<ValueType> node) {
         if (key == node.getValue().getKey()) {
             return node;
         }
@@ -106,4 +106,5 @@ public class AVLTree<ValueType extends Indexable> {
 
         return null;
     }
+
 }
