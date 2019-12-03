@@ -13,7 +13,13 @@ public class Main {
     public static void main(String[] args) {
         // Palavras, prefixo, quantidade
 
-        if(args.length < 2) {
+        if(args.length == 0) {
+            AutocompleteGUI gui = new AutocompleteGUI();
+            gui.showGUI();
+            return;
+        }
+
+        else if(args.length < 2) {
             System.out.println("Faltam argumentos\nUso: palavras prefixo [quantidade]");
             return;
         }
@@ -40,7 +46,7 @@ public class Main {
             }
         }
 
-        TrieTree wordsTree = generateTrie(wordsFile);
+        TrieTree wordsTree = TrieTree.generateTrie(wordsFile);
         if(wordsTree == null) {
             System.out.println("Arvore danulad");
             return;
@@ -57,37 +63,5 @@ public class Main {
         for (String word : words) {
             System.out.println(word);
         }
-
-        // AutocompleteGUI.run();
-    }
-
-    public static TrieTree generateTrie(String wordsFile) {
-        BufferedReader reader;
-        TrieTree tree;
-
-        try {
-            reader = new BufferedReader(new FileReader(wordsFile));
-            tree = new TrieTree();
-
-            /*if(reader.lines().count() < 1) {
-                System.out.println("Erro: Arquivo vazio");
-                reader.close();
-                return null;
-            }*/
-
-            String word = null;
-            //reader.reset();
-            while((word = reader.readLine()) != null) {
-                tree.insert(word);
-            }
-
-            reader.close();
-            return tree;
-        }
-        catch(Exception e) {
-            System.out.println("Erro: " + e.getMessage());
-        }
-
-        return null;
     }
 }

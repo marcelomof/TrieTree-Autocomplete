@@ -1,5 +1,8 @@
 package br.ufrn.imd.marcelo;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.util.Vector;
 
 public class TrieTree {
@@ -72,6 +75,40 @@ public class TrieTree {
         else {
             return next;
         }
+    }
+
+    public static TrieTree generateTrie(String wordsFile) {
+        return generateTrie(new File(wordsFile));
+    }
+
+    public static TrieTree generateTrie(File wordsFile) {
+        BufferedReader reader;
+        TrieTree tree;
+
+        try {
+            reader = new BufferedReader(new FileReader(wordsFile));
+            tree = new TrieTree();
+
+            /*if(reader.lines().count() < 1) {
+                System.out.println("Erro: Arquivo vazio");
+                reader.close();
+                return null;
+            }*/
+
+            String word = null;
+            //reader.reset();
+            while((word = reader.readLine()) != null) {
+                tree.insert(word);
+            }
+
+            reader.close();
+            return tree;
+        }
+        catch(Exception e) {
+            System.out.println("Erro: " + e.getMessage());
+        }
+
+        return null;
     }
 
     // SearchByPrefix
