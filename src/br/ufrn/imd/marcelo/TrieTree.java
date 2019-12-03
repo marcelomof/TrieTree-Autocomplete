@@ -90,11 +90,15 @@ public class TrieTree {
             System.out.println(prefix);
         }
 
-        preOrderCompletions(prefix, occurrence.getChildren().getRoot(), n);
+        inOrderCompletions(prefix, occurrence.getChildren().getRoot(), n);
     }
 
-    private void preOrderCompletions(String prefix, AVLNode<TrieNode> node, int n) {
+    private void inOrderCompletions(String prefix, AVLNode<TrieNode> node, int n) {
         String next = prefix + node.getValue().getValue();
+
+        if (node.getLeft() != null) {
+            inOrderCompletions(prefix, node.getLeft(), n);
+        }
 
         if(node.getValue().getIsWord()) {
             System.out.println(next);
@@ -109,15 +113,12 @@ public class TrieTree {
         }
 
         if(node.getValue().getChildren().getRoot() != null) {
-            preOrderCompletions(next, node.getValue().getChildren().getRoot(), n);
+            inOrderCompletions(next, node.getValue().getChildren().getRoot(), n);
         }
 
-        if (node.getLeft() != null) {
-            preOrderCompletions(prefix, node.getLeft(), n);
-        }
 
         if (node.getRight() != null) {
-            preOrderCompletions(prefix, node.getRight(), n);
+            inOrderCompletions(prefix, node.getRight(), n);
         }
     }
 

@@ -11,7 +11,7 @@ public class Main {
     public static void main(String[] args) {
         // Palavras, prefixo, quantidade
 
-        /*if(args.length < 2) {
+        if(args.length < 2) {
             System.out.println("Faltam argumentos\nUso: palavras prefixo [quantidade]");
             return;
         }
@@ -44,9 +44,9 @@ public class Main {
             return;
         }
 
-        wordsTree.autocomplete(prefix, n);*/
+        wordsTree.autocomplete(prefix, n);
 
-        AutocompleteGUI.run();
+        // AutocompleteGUI.run();
     }
 
     public static TrieTree generateTrie(String wordsFile) {
