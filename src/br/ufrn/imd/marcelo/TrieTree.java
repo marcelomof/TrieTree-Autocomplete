@@ -1,5 +1,7 @@
 package br.ufrn.imd.marcelo;
 
+import java.util.Vector;
+
 public class TrieTree {
     private TrieNode root;
 
@@ -12,33 +14,34 @@ public class TrieTree {
     }
 
     public void insert(String word) {
-        insert(word, root);
+        insert(word, 0, root);
     }
 
     // Insert
-    private void insert(String word, TrieNode node) {
+    private void insert(String word, int sub, TrieNode node) {
         if(word == null) {
             return;
         }
 
         TrieNode next;
         if(node.getChildren().getRoot() == null) {
-            next = new TrieNode(word.charAt(0));
+            next = new TrieNode(word.charAt(sub));
             node.getChildren().insert(next);
         }
-        else if(node.getChildren().search(word.charAt(0)) == null) {
-            next = new TrieNode(word.charAt(0));
+        else if(node.getChildren().search(word.charAt(sub)) == null) {
+            next = new TrieNode(word.charAt(sub));
             node.getChildren().insert(next);
         }
         else {
-            next = node.getChildren().search(word.charAt(0)).getValue();
+            next = node.getChildren().search(word.charAt(sub)).getValue();
         }
 
-        if(word.length() > 1) {
-            insert(word.substring(1), next);
+        if(sub < word.length() - 1) {
+            insert(word, sub+1, next);
         }
         else {
             next.setIsWord(true);
+            next.setWord(word);
         }
     }
 
@@ -72,53 +75,43 @@ public class TrieTree {
     }
 
     // SearchByPrefix
-    public void autocomplete(String prefix) {
-        autocomplete(prefix, -1);
-    }
-
-    public void autocomplete(String prefix, int n) {
+    public Vector<String> autocomplete(String prefix) {
         if(prefix == null) {
-            return;
+            return null;
         }
 
         TrieNode occurrence = find(prefix);
         if(occurrence == null) {
-            return;
+            return null;
         }
 
-        if(occurrence.getIsWord()) {
-            System.out.println(prefix);
-        }
+        Vector<String> words = new Vector<>();
+        inOrderCompletions(prefix, words, occurrence.getChildren().getRoot());
 
-        inOrderCompletions(prefix, occurrence.getChildren().getRoot(), n);
+        if(words.isEmpty()) {
+            return null;
+        }
+        return words;
     }
 
-    private void inOrderCompletions(String prefix, AVLNode<TrieNode> node, int n) {
+    private void inOrderCompletions(String prefix, Vector<String> words, AVLNode<TrieNode> node) {
         String next = prefix + node.getValue().getValue();
 
         if (node.getLeft() != null) {
-            inOrderCompletions(prefix, node.getLeft(), n);
+            inOrderCompletions(prefix, words, node.getLeft());
         }
 
         if(node.getValue().getIsWord()) {
-            System.out.println(next);
-        }
-
-        if(n == 0) {
-            return;
-        }
-
-        if(n > 0) {
-            --n;
+            // GAMBIARRA
+            words.add(node.getValue().getWord());
         }
 
         if(node.getValue().getChildren().getRoot() != null) {
-            inOrderCompletions(next, node.getValue().getChildren().getRoot(), n);
+            inOrderCompletions(next, words, node.getValue().getChildren().getRoot());
         }
 
-
         if (node.getRight() != null) {
-            inOrderCompletions(prefix, node.getRight(), n);
+            inOrderCompletions(prefix, words, node.getRight());
         }
     }
 

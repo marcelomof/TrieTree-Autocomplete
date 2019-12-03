@@ -75,7 +75,7 @@ public class TrieTreeTest {
         assertEquals("ja\njava\njogo\n", outContent.toString());
     }
 
-    @Test
+    /*@Test
     public void AutocompletarN() {
         final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         final PrintStream originalOut = System.out;
@@ -91,5 +91,5 @@ public class TrieTreeTest {
 
         tree.autocomplete("j", 2);
         assertEquals("ja\njava\n", outContent.toString());
-    }
+    }*/
 }

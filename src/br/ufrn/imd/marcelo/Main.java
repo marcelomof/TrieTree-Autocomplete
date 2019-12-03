@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.Iterator;
+import java.util.Vector;
 
 public class Main {
 
@@ -44,7 +46,17 @@ public class Main {
             return;
         }
 
-        wordsTree.autocomplete(prefix, n);
+        Vector<String> words;
+        words = wordsTree.autocomplete(prefix);
+
+        if(words == null) {
+            System.out.println("Nenhuma palavra encontrada com o prefixo \'" + prefix + "\'");
+            return;
+        }
+        System.out.println(words.size() + " palavras encontradas:");
+        for (String word : words) {
+            System.out.println(word);
+        }
 
         // AutocompleteGUI.run();
     }
