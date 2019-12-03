@@ -47,7 +47,7 @@ public class Main {
         }
 
         Vector<String> words;
-        words = wordsTree.autocomplete(prefix);
+        words = wordsTree.autocomplete(prefix, n);
 
         if(words == null) {
             System.out.println("Nenhuma palavra encontrada com o prefixo \'" + prefix + "\'");

@@ -75,6 +75,21 @@ public class TrieTree {
     }
 
     // SearchByPrefix
+    public Vector<String> autocomplete(String prefix, int n) {
+        Vector<String> words = autocomplete(prefix);
+        if(words != null) {
+            Vector<String> nwords = new Vector<>();
+            for(String word : words) {
+                if(nwords.size() >= n) {
+                    break;
+                }
+                nwords.add(word);
+            }
+            return nwords;
+        }
+        return null;
+    }
+
     public Vector<String> autocomplete(String prefix) {
         if(prefix == null) {
             return null;
