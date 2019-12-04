@@ -6,13 +6,14 @@ import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.Vector;
 
 import static org.junit.Assert.*;
 
 public class TrieTreeTest {
 
     @Test
-    public void PalavraEhInserida() {
+    public void InsercaoDePalavras() {
         TrieTree tree = new TrieTree();
 
         tree.insert("java");
@@ -29,7 +30,7 @@ public class TrieTreeTest {
     }
 
     @Test
-    public void PalavraPrefixoDeOutra() {
+    public void InsercaoDePalavraPrefixaDeOutra() {
         TrieTree tree = new TrieTree();
 
         tree.insert("java");
@@ -48,7 +49,7 @@ public class TrieTreeTest {
     }
 
     @Test
-    public void PalavraEhEncontrada() {
+    public void MetodoFindEncontraPalavraExistente() {
         TrieTree tree = new TrieTree();
 
         tree.insert("java");
@@ -58,12 +59,7 @@ public class TrieTreeTest {
     }
 
     @Test
-    public void Autocompletar() {
-        final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        final PrintStream originalOut = System.out;
-
-        System.setOut(new PrintStream(outContent));
-
+    public void AutocompletarRetornaListaComTodasAsPalavrasComPrefixo() {
         TrieTree tree = new TrieTree();
 
         tree.insert("java");
@@ -71,17 +67,15 @@ public class TrieTreeTest {
         tree.insert("ja");
         tree.insert("poo");
 
-        tree.autocomplete("j");
-        assertEquals("ja\njava\njogo\n", outContent.toString());
+        Vector<String> words = tree.autocomplete("j");
+        assertEquals(words.size(), 3);
+        assertEquals(words.elementAt(0), "ja");
+        assertEquals(words.elementAt(1), "java");
+        assertEquals(words.elementAt(2), "jogo");
     }
 
-    /*@Test
-    public void AutocompletarN() {
-        final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        final PrintStream originalOut = System.out;
-
-        System.setOut(new PrintStream(outContent));
-
+    @Test
+    public void AutocompletarRetornarListaComNPalavrasComPrefixo() {
         TrieTree tree = new TrieTree();
 
         tree.insert("java");
@@ -89,7 +83,9 @@ public class TrieTreeTest {
         tree.insert("ja");
         tree.insert("poo");
 
-        tree.autocomplete("j", 2);
-        assertEquals("ja\njava\n", outContent.toString());
-    }*/
+        Vector<String> words = tree.autocomplete("j", 2);
+        assertEquals(words.size(), 2);
+        assertEquals(words.elementAt(0), "ja");
+        assertEquals(words.elementAt(1), "java");
+    }
 }

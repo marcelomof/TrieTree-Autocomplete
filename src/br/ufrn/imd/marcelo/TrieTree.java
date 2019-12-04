@@ -89,19 +89,15 @@ public class TrieTree {
             reader = new BufferedReader(new FileReader(wordsFile));
             tree = new TrieTree();
 
-            /*if(reader.lines().count() < 1) {
-                System.out.println("Erro: Arquivo vazio");
-                reader.close();
-                return null;
-            }*/
-
             String word = null;
-            //reader.reset();
             while((word = reader.readLine()) != null) {
                 tree.insert(word);
             }
 
             reader.close();
+            if(tree.getRoot().getChildren().getRoot() == null) {
+                return null;
+            }
             return tree;
         }
         catch(Exception e) {
@@ -170,7 +166,6 @@ public class TrieTree {
         }
 
         if(node.getValue().getIsWord()) {
-            // GAMBIARRA
             words.add(node.getValue().getWord());
         }
 

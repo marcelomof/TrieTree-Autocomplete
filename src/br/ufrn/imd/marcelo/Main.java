@@ -1,11 +1,5 @@
 package br.ufrn.imd.marcelo;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.text.ParseException;
-import java.util.Iterator;
 import java.util.Vector;
 
 public class Main {
@@ -21,6 +15,7 @@ public class Main {
 
         else if(args.length < 2) {
             System.out.println("Faltam argumentos\nUso: palavras prefixo [quantidade]");
+            System.out.println("Ou rode sem argumentos para utilizar o cliente gráfico");
             return;
         }
 
@@ -53,13 +48,24 @@ public class Main {
         }
 
         Vector<String> words;
-        words = wordsTree.autocomplete(prefix, n);
+        if(n == -1) {
+            words = wordsTree.autocomplete(prefix);
+        }
+        else {
+            words = wordsTree.autocomplete(prefix, n);
+        }
 
         if(words == null) {
             System.out.println("Nenhuma palavra encontrada com o prefixo \'" + prefix + "\'");
             return;
         }
-        System.out.println(words.size() + " palavras encontradas:");
+        if(n == -1) {
+            System.out.println(words.size() + " palavra(s) encontrada(s):");
+        }
+        else {
+            System.out.println("Mostrando primeiras " + n + " palavras encontradas:");
+        }
+
         for (String word : words) {
             System.out.println(word);
         }
