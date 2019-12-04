@@ -115,14 +115,19 @@ public class TrieTree {
     public Vector<String> autocomplete(String prefix, int n) {
         Vector<String> words = autocomplete(prefix);
         if(words != null) {
-            Vector<String> nwords = new Vector<>();
-            for(String word : words) {
-                if(nwords.size() >= n) {
-                    break;
+            Vector<String> nwords;
+
+            if(words.size() > n) {
+                nwords = new Vector<>();
+                for(String word : words) {
+                    if(nwords.size() >= n) {
+                        break;
+                    }
+                    nwords.add(word);
                 }
-                nwords.add(word);
+                return nwords;
             }
-            return nwords;
+            return words;
         }
         return null;
     }
@@ -138,7 +143,14 @@ public class TrieTree {
         }
 
         Vector<String> words = new Vector<>();
-        inOrderCompletions(prefix, words, occurrence.getChildren().getRoot());
+        if(occurrence.getChildren().getRoot() == null) {
+            if(occurrence.getIsWord()) {
+                words.add(occurrence.getWord());
+            }
+        }
+        else {
+            inOrderCompletions(prefix, words, occurrence.getChildren().getRoot());
+        }
 
         if(words.isEmpty()) {
             return null;
@@ -147,6 +159,10 @@ public class TrieTree {
     }
 
     private void inOrderCompletions(String prefix, Vector<String> words, AVLNode<TrieNode> node) {
+        if(prefix == null) {
+            return;
+        }
+
         String next = prefix + node.getValue().getValue();
 
         if (node.getLeft() != null) {
